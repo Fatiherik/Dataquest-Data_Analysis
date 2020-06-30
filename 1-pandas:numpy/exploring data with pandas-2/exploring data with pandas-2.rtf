@@ -1,206 +1,82 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2511
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\froman\fcharset0 Times-Roman;\f2\froman\fcharset0 Times-Italic;
-\f3\fnil\fcharset0 Menlo-Regular;\f4\froman\fcharset0 Times-Bold;}
-{\colortbl;\red255\green255\blue255;\red41\green46\blue57;\red255\green255\blue255;\red183\green13\blue60;
-\red247\green237\blue240;\red60\green64\blue83;}
-{\*\expandedcolortbl;;\cssrgb\c21176\c23922\c28627;\cssrgb\c100000\c100000\c100000;\cssrgb\c77647\c14118\c30196;
-\cssrgb\c97647\c94510\c95294;\cssrgb\c30196\c32157\c40000;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh18000\viewkind0
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f0\fs28 \cf0 \
-\'97 f500_selection=f500[['rank','revenues','revenue_change']].head()                       f500 datasindan 3 sutun ald\uc0\u305 k.\
-\
-\'97import pandas as pd\
-f500=pd.read_csv('f500.csv', index_col=0)                                                index_col=0   bastake index numaralarini siliyor\
-f500.index.name=None    							                          en bastaki sutunun basligini siliyor\
-f500.loc[f500["previous_rank"] == 0, "previous_rank"] = np.nan\
-\
-\'97 
-\f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Recall that when we worked with a dataframe with\'a0
-\f2\i string
-\f1\i0 \'a0index labels, we used\'a0
-\f3 \cf4 \cb5 \strokec4 loc[]
-\f1 \cf2 \cb3 \strokec2 \'a0to select data:\
-\
-\'97fifth_row=f500.iloc[4]                    datanon 5. Satirini aliyor\
-company_value=f500.iloc[0,0]\
-\
-\'97 first_three_rows=f500.iloc[:3]                            ilk 3 satiri ve butun sutunlari al\uc0\u305 yor\
-first_seventh_row_slice=f500.iloc[[0,6],:5]           1 ve 7 satir ile ilk 5 sutunu al\uc0\u305 yor\
-\
-\'97null_previous_rank=f500[f500['previous_rank'].isnull()==\
-                        True][['company','rank','previous_rank']]                            previous rank sutunun bos olanlarini ve belirtilen 3 sutunu aldi\
-\
-\'97null_previous_rank = f500[f500["previous_rank"].isnull()]\
-top5_null_prev_rank=null_previous_rank.iloc[:5]                                   ilk 5 satiri aldi\
-\
-\'97previously_ranked=f500[f500['previous_rank'].notnull()]\
-rank_change=previously_ranked['previous_rank']-previously_ranked['rank']\
-f500['rank_change']=rank_change\
-\
-\'97large_revenue=f500['revenues']>100000\
-negative_profits=f500['profits']<0\
-combined=large_revenue&negative_profits\
-big_rev_neg_profit=f500[combined]\
-\
-\'97brazil_venezuela=f500[(f500['country']=='Brazil')|(f500['country']=='Venezuela')]\
-\
-tech_outside_usa=f500[(f500['country']!='USA')&(f500['sector']=='Technology')].head()\
-\
-\'97top_japanese_employer=f500[f500['country']=='Japan'].sort_values('employees', ascending=False).iloc[0,0]\
-\
-\'97top_employer_by_country=\{\}\
-countries=f500['country'].unique()\
-for c in countries:\
-    selected_rows=f500[f500['country']==c]\
-    mostselected_rows=selected_rows.sort_values('employees', ascending=False).iloc[0,0]                           her bulkeden en fazla isci istihdam eden firmalar\uc0\u305 n listesini sozluk seklinde veriyor\
-    top_employer_by_country[c]=mostselected_rows\
-\
-\'97 f500['roa']=f500['profits']/f500['assets']\
-top_roa_by_sector=\{\}\
-sectors=f500['sector'].unique()\
-for s in sectors:									                                                                 her sekt\'f6rdeki en y\'fcksek Roa sahip firmay\uc0\u305  sozluk seklinde veriyor\
-    sector_companies=f500[f500['sector']==s].sort_values('roa', ascending=False).iloc[0,0]\
-    top_roa_by_sector[s]=sector_companies\
-\
-\'97
-\f4\b Select by integer position\cb1 \
+— f500_selection=f500[['rank','revenues','revenue_change']].head()                       f500 datasindan 3 sutun aldık.
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth5141\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth3038\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth3038\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\cell
-\pard\intbl\itap1\pardeftab720\sl600\qc\partightenfactor0
-\cf2 \cb3 Explicit Syntax\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\qc\partightenfactor0
-\cf2 \cb3 Shorthand Convention\cb1 \cell \row
+—import pandas as pd
+f500=pd.read_csv('f500.csv', index_col=0)                                                index_col=0   bastake index numaralarini siliyor
+f500.index.name=None    							                          en bastaki sutunun basligini siliyor
+f500.loc[f500["previous_rank"] == 0, "previous_rank"] = np.nan
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth3995\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth5141\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth3038\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+— Recall that when we worked with a dataframe with string index labels, we used loc[] to select data:
 
-\f1\b0 \cf2 \cb3 Single column from dataframe\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+—fifth_row=f500.iloc[4]                    datanon 5. Satirini aliyor
+company_value=f500.iloc[0,0]
 
-\f3 \cf4 \cb5 \strokec4 df.iloc[:,3]
-\f1 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cell \row
+— first_three_rows=f500.iloc[:3]                            ilk 3 satiri ve butun sutunlari alıyor
+first_seventh_row_slice=f500.iloc[[0,6],:5]           1 ve 7 satir ile ilk 5 sutunu alıyor
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth3995\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth5141\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth3038\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 List of columns from dataframe\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+—null_previous_rank=f500[f500['previous_rank'].isnull()==
+                        True][['company','rank','previous_rank']]                            previous rank sutunun bos olanlarini ve belirtilen 3 sutunu aldi
 
-\f3 \cf4 \cb5 \strokec4 df.iloc[:,[3,5,6]]
-\f1 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cell \row
+—null_previous_rank = f500[f500["previous_rank"].isnull()]
+top5_null_prev_rank=null_previous_rank.iloc[:5]                                   ilk 5 satiri aldi
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth3995\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth5141\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth3038\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 Slice of columns from dataframe\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+—previously_ranked=f500[f500['previous_rank'].notnull()]
+rank_change=previously_ranked['previous_rank']-previously_ranked['rank']
+f500['rank_change']=rank_change
 
-\f3 \cf4 \cb5 \strokec4 df.iloc[:,3:7]
-\f1 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cell \row
+—large_revenue=f500['revenues']>100000
+negative_profits=f500['profits']<0
+combined=large_revenue&negative_profits
+big_rev_neg_profit=f500[combined]
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth3995\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth5141\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth3038\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 Single row from dataframe\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+—brazil_venezuela=f500[(f500['country']=='Brazil')|(f500['country']=='Venezuela')]
 
-\f3 \cf4 \cb5 \strokec4 df.iloc[20]
-\f1 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cell \row
+tech_outside_usa=f500[(f500['country']!='USA')&(f500['sector']=='Technology')].head()
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth3995\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth5141\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth3038\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 List of rows from dataframe\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+—top_japanese_employer=f500[f500['country']=='Japan'].sort_values('employees', ascending=False).iloc[0,0]
 
-\f3 \cf4 \cb5 \strokec4 df.iloc[[0,3,8]]
-\f1 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cell \row
+—top_employer_by_country={}
+countries=f500['country'].unique()
+for c in countries:
+    selected_rows=f500[f500['country']==c]
+    mostselected_rows=selected_rows.sort_values('employees', ascending=False).iloc[0,0]                           her bulkeden en fazla isci istihdam eden firmaların listesini sozluk seklinde veriyor
+    top_employer_by_country[c]=mostselected_rows
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth3995\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth5141\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth3038\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 Slice of rows from dataframe\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+— f500['roa']=f500['profits']/f500['assets']
+top_roa_by_sector={}
+sectors=f500['sector'].unique()
+for s in sectors:									                                                                 her sektördeki en yüksek Roa sahip firmayı sozluk seklinde veriyor
+    sector_companies=f500[f500['sector']==s].sort_values('roa', ascending=False).iloc[0,0]
+    top_roa_by_sector[s]=sector_companies
 
-\f3 \cf4 \cb5 \strokec4 df.iloc[3:5]
-\f1 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+—Select by integer position
 
-\f3 \cf4 \cb5 \strokec4 df[3:5]
-\f1 \cf2 \cb1 \strokec2 \cell \row
+Explicit Syntax
+Shorthand Convention
+Single column from dataframe
+df.iloc[:,3]
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth3995\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth5141\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth3038\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 Single items from series\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+List of columns from dataframe
+df.iloc[:,[3,5,6]]
 
-\f3 \cf4 \cb5 \strokec4 s.iloc[8]
-\f1 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+Slice of columns from dataframe
+df.iloc[:,3:7]
 
-\f3 \cf4 \cb5 \strokec4 s[8]
-\f1 \cf2 \cb1 \strokec2 \cell \row
+Single row from dataframe
+df.iloc[20]
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth3995\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth5141\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth3038\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 List of item from series\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+List of rows from dataframe
+df.iloc[[0,3,8]]
 
-\f3 \cf4 \cb5 \strokec4 s.iloc[[2,8,1]]
-\f1 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
-
-\f3 \cf4 \cb5 \strokec4 s[[2,8,1]]
-\f1 \cf2 \cb1 \strokec2 \cell \row
-
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth3995\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth5141\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth3038\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf6 \clbrdrl\brdrs\brdrw20\brdrcf6 \clbrdrb\brdrs\brdrw20\brdrcf6 \clbrdrr\brdrs\brdrw20\brdrcf6 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 Slice of items from series\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
-
-\f3 \cf4 \cb5 \strokec4 s.iloc[5:10]
-\f1 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
-
-\f3 \cf4 \cb5 \strokec4 s[5:10]
-\f1 \cf2 \cb1 \strokec2 \cell \lastrow\row
-}
+Slice of rows from dataframe
+df.iloc[3:5]
+df[3:5]
+Single items from series
+s.iloc[8]
+s[8]
+List of item from series
+s.iloc[[2,8,1]]
+s[[2,8,1]]
+Slice of items from series
+s.iloc[5:10]
+s[5:10]
