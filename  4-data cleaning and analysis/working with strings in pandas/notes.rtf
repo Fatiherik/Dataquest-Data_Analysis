@@ -1,0 +1,161 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2511
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 ArialMT;\f2\froman\fcharset0 Times-Roman;
+\f3\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red41\green46\blue57;\red255\green255\blue255;\red41\green46\blue57;
+\red183\green13\blue60;\red247\green237\blue240;\red60\green64\blue83;\red109\green109\blue109;}
+{\*\expandedcolortbl;;\cssrgb\c21176\c23922\c28627;\cssrgb\c100000\c100000\c100000;\cssrgb\c21176\c23922\c28627;
+\cssrgb\c77647\c14118\c30196;\cssrgb\c97647\c94510\c95294;\cssrgb\c30196\c32157\c40000;\cssrgb\c50196\c50196\c50196;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh18000\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf0 \'97 world_dev = pd.read_csv("World_dev.csv")\
+col_renaming = \{'SourceOfMostRecentIncomeAndExpenditureData': 'IESurvey'\}\
+merged=pd.merge(left=happiness2015, right=world_dev, how='left', left_on=happiness2015['Country'], right_on=world_dev['ShortName'])\
+merged=merged.rename(col_renaming, axis=1)\
+\
+\'97def extract_last_word(element):\
+    listwords=str(element).split()\
+    return listwords[-1]\
+\
+merged['Currency Apply']=merged['CurrencyUnit'].apply(extract_last_word)\
+merged['Currency Apply'].head()\
+\
+\'97merged['Currency Vectorized']=merged['CurrencyUnit'].str.split().str.get(-1)              
+\f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
+Series.str.method_name pandasin vectorized methodu. 
+\f0 \cf0 \cb1 \kerning1\expnd0\expndtw0  her methoddan sonra str eklemeyi unutma\
+merged['Currency Vectorized'].head()				              \
+\
+\'97 merged['CurrencyUnit'].isnull().sum()    sutunda kac adet bo\uc0\u351  h\'fccre oldugunu s\'f6yl\'fcyor\
+\
+\'97lengths=merged['CurrencyUnit'].str.len()\
+value_counts=lengths.value_counts(dropna=False).                dropna=false  nan degerleri dusurmuyor\
+\
+\'97pattern = r"[Nn]ational accounts"\
+national_accounts=merged['SpecialNotes'].str.contains(pattern)             kolonda patterndaki ifade var mi yok mu? Nan true veya false donduruyor\
+national_accounts.head()\
+\
+\'97pattern = r"[Nn]ational accounts"\
+national_accounts=merged['SpecialNotes'].str.contains(pattern, na=False)                        na=false yapmazsak hata al\uc0\u305 yoruz, \'e7\'fcnk\'fc national account icinde nan degerler kal\u305 yor ve alt sat\u305 rdaki indexleme i\u351 lemini yapam\u305 yoruz.\
+merged_national_accounts=merged[national_accounts]\
+merged_national_accounts.head()\
+\
+\'97pattern = r"[0-9]"\
+#lowercase letters\
+pattern1 = r"[a-z]"\
+\
+#uppercase letters\
+pattern2 = r"[A-Z]"\
+\
+pattern = r\'94[1-6][a-z][a-z]\'94.  3 karakter ar\uc0\u305 yoruz ilki 1-6 aras\u305 nda bir say\u305  olabilir, 2 ve 3. Herhangi bir harf olabilir\
+\
+pattern = r"[1-6][a-z][a-z]" = r"[1-6][a-z]\{2\}"      \
+\
+pattern =r"([1-2][0-9]\{3\})"			                        1900 ve 2000 li yillari aradik\
+years=merged['SpecialNotes'].str.extract(pattern)         nan ve o yillari dondurdu, extract kullandigimiz icin patternda parantezler kulland\uc0\u305 k, normalde parantez yok dikkat et,\
+\
+\'97 pattern = r"([1-2][0-9]\{3\})"\
+years=merged['SpecialNotes'].str.extract(pattern, expand=True)               expand=true  sonuclari dataframe olarak donduruyor.\
+\
+\'97 merged = merged.set_index('Country')                country index sutunu yapt\uc0\u305 \
+\
+\'97pattern = r"(?P<Years>[1-2][0-9]\{3\})"		       years diye bir sutun basligi a\'e7\uc0\u305 yor\
+years=merged['IESurvey'].str.extractall(pattern)	     extract sadece pattern ilk uyan al\uc0\u305 yor, extractall butun hepsini seciyor\
+value_counts=years['Years'].value_counts()\
+print(value_counts)\
+\
+\'97pattern = r"(?P<First_Year>[1-2][0-9]\{3\})/?(?P<Second_Year>[0-9]\{2\})?"\
+years=merged['IESurvey'].str.extractall(pattern)\
+first_two_year=years['First_Year'].str[:2]\
+years['Second_Year']=first_two_year+years['Second_Year']\
+\
+\'97 
+\f2 \cf4 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec4 If part of the regex isn't grouped using parantheses,\'a0
+\f3\fs20\fsmilli10200 \cf5 \cb6 \strokec5 ()
+\f2\fs28 \cf4 \cb3 \strokec4 , it won't be extracted. Yani yukaridaki ile 
+\f0 \cf0 \cb1 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 r"(?P<First_Year>[1-2][0-9]\{3\})(/)?(?P<Second_Year>[0-9]\{2\})?" Bu ifade farkli sonuclar veriyor.\
+\
+\'97merged['IncomeGroup']=merged['IncomeGroup'].str.strip()\
+pv_incomes = merged.pivot_table(values='Happiness Score', index='IncomeGroup')\
+pv_incomes.plot(kind='bar', rot=30, ylim=(0,10))\
+\
+\'97 merged['IncomeGroup'] = merged['IncomeGroup'].str.replace(' income', '').str.replace(':', '').str.upper()\
+pv_incomes = merged.pivot_table(values='Happiness Score', index='IncomeGroup')\
+pv_incomes.plot(kind='bar', rot=30, ylim=(0,10))\
+\
+\'97
+\f1 \cf4 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec4 Method\cb1 \
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth8204\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth8204\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
+\pard\intbl\itap1\cell
+\pard\intbl\itap1\pardeftab720\sl600\qc\partightenfactor0
+\cf4 \cb3 Description\cb1 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2549\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth8204\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Series.str.split()\cb1 \cell 
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Splits each element in the Series.\cb1 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2549\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth8204\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Series.str.strip()\cb1 \cell 
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Strips whitespace from each string in the Series.\cb1 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2549\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth8204\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Series.str.lower()\cb1 \cell 
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Converts strings in the Series to lowercase.\cb1 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2549\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth8204\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Series.str.upper()\cb1 \cell 
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Converts strings in the Series to uppercase.\cb1 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2549\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth8204\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Series.str.get()\cb1 \cell 
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Retrieves the ith element of each element in the Series.\cb1 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2549\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth8204\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Series.str.replace()\cb1 \cell 
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Replaces a regex or string in the Series with another string.\cb1 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2549\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth8204\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Series.str.cat()\cb1 \cell 
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Concatenates strings in a Series.\cb1 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth2549\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx4320
+\clvertalc \clshdrawnil \clwWidth8204\clftsWidth3 \clbrdrt\brdrs\brdrw20\brdrcf7 \clbrdrl\brdrs\brdrw20\brdrcf7 \clbrdrb\brdrs\brdrw20\brdrcf7 \clbrdrr\brdrs\brdrw20\brdrcf7 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Series.str.extract()\cb1 \cell 
+\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+\cf4 \cb3 Extracts substrings from the Series matching a regex pattern.\cb1 \cell \lastrow\row
+}
