@@ -1,190 +1,67 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2511
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\froman\fcharset0 Times-Bold;\f2\froman\fcharset0 Times-Roman;
-\f3\fnil\fcharset0 Menlo-Regular;}
-{\colortbl;\red255\green255\blue255;\red41\green46\blue57;\red255\green255\blue255;\red60\green64\blue83;
-\red183\green13\blue60;\red247\green237\blue240;}
-{\*\expandedcolortbl;;\cssrgb\c21176\c23922\c28627;\cssrgb\c100000\c100000\c100000;\cssrgb\c30196\c32157\c40000;
-\cssrgb\c77647\c14118\c30196;\cssrgb\c97647\c94510\c95294;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh18000\viewkind0
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+— f500 = pd.read_csv('f500.csv',index_col=0)
+f500.index.name = None
+f500_type=type(f500)
+f500_shape=f500.shape
 
-\f0\fs28 \cf0 \'97 f500 = pd.read_csv('f500.csv',index_col=0)\
-f500.index.name = None\
-f500_type=type(f500)\
-f500_shape=f500.shape\
-\
-\'97f500_head=f500.head(6)               say\uc0\u305  belirtmezsen default olarak ilk 5 veriyi getiriyor\
-f500_tail=f500.tail(8)                         say\uc0\u305  belirtmezsen default olarak son 5 veriyi getiriyor\
-\
-\'97 f500.info()\
-f500.dtypes\
-\
-\'97 industries=f500['industry']                  industry kolonunu al\uc0\u305 yor\
-\
-\'97countries=f500['country']                                                                           country kolunun al\uc0\u305 yor\
-revenues_years=f500[['revenues','years_on_global_500_list']]                     f500 datasindan iki kolon aliyor, iki tane [ ] olduguna dikkat et!!!!\
-ceo_to_sector=f500.loc[:,'ceo':'sector']\
-\
-\'97single_row = f500_selection.loc["Sinopec Group"]                         sadece sinopec group satirini aldi\
-\
-\'97 list_rows = f500_selection.loc[["Toyota Motor", "Walmart"]]                f500 datasindan iki satir aldi. iki tane [ ] olduguna dikkat et!!!!\
-\
-\'97slice_rows = f500_selection["State Grid":"Toyota Motor"]                  f500 datasindan iki cirkelt aras\uc0\u305 ndaki sat\u305 rlar\u305  aldi.       f500_selection.loc[[\'93State Grid":"Toyota Motor"] ,:]   bunun k\u305 sa hali\
-\
-\'97 toyota=f500.loc['Toyota Motor']                                                                                          bir satir tum sutunlar\
-drink_companies=f500.loc[['Anheuser-Busch InBev','Coca-Cola','Heineken Holding']]        3 satir tum sutunlar\
-middle_companies=f500.loc['Tata Motors':'Nationwide','rank':'country']                              satir ve sutun araligi\
-\
-\'97 sonuc olarak \
-Tek kolon almak icin     f500['country']   \
-Multi kolon almak icin    f500[['revenues','years_on_global_500_list']]   \
-Tek satir almak icin        f500_selection.loc["Sinopec Group"]   \
-Multi satir almak icin      f500_selection.loc[["Toyota Motor", "Walmart"]]  \
-\
-\'97 countries=f500['country']\
-country_counts=countries.value_counts()\
-\
-\'97 
-\f1\b \cf2 \cb3 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Select by Label\cb1 \
+—f500_head=f500.head(6)               sayı belirtmezsen default olarak ilk 5 veriyi getiriyor
+f500_tail=f500.tail(8)                         sayı belirtmezsen default olarak son 5 veriyi getiriyor
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth6718\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth5667\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth5667\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\cell
-\pard\intbl\itap1\pardeftab720\sl600\qc\partightenfactor0
-\cf2 \cb3   Explicit Syntax\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\qc\partightenfactor0
-\cf2 \cb3 Shorthand Convention\cb1 \cell \row
+— f500.info()
+f500.dtypes
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth2254\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth6718\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth5667\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+— industries=f500['industry']                  industry kolonunu alıyor
 
-\f2\b0 \cf2 \cb3 Single column from dataframe\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+—countries=f500['country']                                                                           country kolunun alıyor
+revenues_years=f500[['revenues','years_on_global_500_list']]                     f500 datasindan iki kolon aliyor, iki tane [ ] olduguna dikkat et!!!!
+ceo_to_sector=f500.loc[:,'ceo':'sector']
 
-\f3\fs42 \cf5 \cb6 \strokec5 df.loc[:,"col1"]
-\f2\fs28 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+—single_row = f500_selection.loc["Sinopec Group"]                         sadece sinopec group satirini aldi
 
-\f3\fs42 \cf5 \cb6 \strokec5 df["col1"]
-\f2\fs28 \cf2 \cb1 \strokec2 \cell \row
+— list_rows = f500_selection.loc[["Toyota Motor", "Walmart"]]                f500 datasindan iki satir aldi. iki tane [ ] olduguna dikkat et!!!!
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth2254\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth6718\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth5667\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 List of columns from dataframe\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+—slice_rows = f500_selection["State Grid":"Toyota Motor"]                  f500 datasindan iki cirkelt arasındaki satırları aldi.       f500_selection.loc[[“State Grid":"Toyota Motor"] ,:]   bunun kısa hali
 
-\f3\fs42 \cf5 \cb6 \strokec5 df.loc[:,["col1","col7"]]
-\f2\fs28 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+— toyota=f500.loc['Toyota Motor']                                                                                          bir satir tum sutunlar
+drink_companies=f500.loc[['Anheuser-Busch InBev','Coca-Cola','Heineken Holding']]        3 satir tum sutunlar
+middle_companies=f500.loc['Tata Motors':'Nationwide','rank':'country']                              satir ve sutun araligi
 
-\f3\fs42 \cf5 \cb6 \strokec5 df[["col1","col7"]]
-\f2\fs28 \cf2 \cb1 \strokec2 \cell \row
+— sonuc olarak 
+Tek kolon almak icin     f500['country']   
+Multi kolon almak icin    f500[['revenues','years_on_global_500_list']]   
+Tek satir almak icin        f500_selection.loc["Sinopec Group"]   
+Multi satir almak icin      f500_selection.loc[["Toyota Motor", "Walmart"]]  
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth2254\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth6718\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth5667\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 Slice of columns from dataframe\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+— countries=f500['country']
+country_counts=countries.value_counts()
 
-\f3\fs42 \cf5 \cb6 \strokec5 df.loc[:,"col1":"col4"]
-\f2\fs28 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cell \row
+— Select by Label
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth2254\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth6718\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth5667\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 Single row from dataframe\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+  Explicit Syntax
+Shorthand Convention
+Single column from dataframe
+df.loc[:,"col1"]
+df["col1"]
+List of columns from dataframe
+df.loc[:,["col1","col7"]]
+df[["col1","col7"]]
+Slice of columns from dataframe
+df.loc[:,"col1":"col4"]
 
-\f3\fs42 \cf5 \cb6 \strokec5 df.loc["row4"]
-\f2\fs28 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cell \row
+Single row from dataframe
+df.loc["row4"]
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth2254\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth6718\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth5667\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 List of rows from dataframe\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
+List of rows from dataframe
+df.loc[["row1", "row8"]]
 
-\f3\fs42 \cf5 \cb6 \strokec5 df.loc[["row1", "row8"]]
-\f2\fs28 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cell \row
-
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth2254\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth6718\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth5667\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 Slice of rows from dataframe\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
-
-\f3\fs42 \cf5 \cb6 \strokec5 df.loc["row3":"row5"]
-\f2\fs28 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
-
-\f3\fs42 \cf5 \cb6 \strokec5 df["row3":"row5"]
-\f2\fs28 \cf2 \cb1 \strokec2 \cell \row
-
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth2254\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth6718\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth5667\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 Single item from series\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
-
-\f3\fs42 \cf5 \cb6 \strokec5 s.loc["item8"]
-\f2\fs28 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
-
-\f3\fs42 \cf5 \cb6 \strokec5 s["item8"]
-\f2\fs28 \cf2 \cb1 \strokec2 \cell \row
-
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth2254\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth6718\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth5667\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 List of items from series\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
-
-\f3\fs42 \cf5 \cb6 \strokec5 s.loc[["item1","item7"]]
-\f2\fs28 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
-
-\f3\fs42 \cf5 \cb6 \strokec5 s[["item1","item7"]]
-\f2\fs28 \cf2 \cb1 \strokec2 \cell \row
-
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth2254\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth6718\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth5667\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf4 \clbrdrl\brdrs\brdrw20\brdrcf4 \clbrdrb\brdrs\brdrw20\brdrcf4 \clbrdrr\brdrs\brdrw20\brdrcf4 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf2 \cb3 Slice of items from series\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
-
-\f3\fs42 \cf5 \cb6 \strokec5 s.loc["item2":"item4"]
-\f2\fs28 \cf2 \cb1 \strokec2 \cell 
-\pard\intbl\itap1\pardeftab720\sl735\partightenfactor0
-
-\f3\fs42 \cf5 \cb6 \strokec5 s["item2":"item4"]
-\f2\fs28 \cf2 \cb1 \strokec2 \cell \lastrow\row
-}
+Slice of rows from dataframe
+df.loc["row3":"row5"]
+df["row3":"row5"]
+Single item from series
+s.loc["item8"]
+s["item8"]
+List of items from series
+s.loc[["item1","item7"]]
+s[["item1","item7"]]
+Slice of items from series
+s.loc["item2":"item4"]
+s["item2":"item4"]
