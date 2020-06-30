@@ -1,99 +1,92 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2511
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh15100\viewkind0
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+— import pandas as pd
+import matplotlib.pyplot as plt
 
-\f0\fs28 \cf0 \'97 import pandas as pd\
-import matplotlib.pyplot as plt\
-\
-unrate = pd.read_csv('unrate.csv')\
-unrate['DATE'] = pd.to_datetime(unrate['DATE'])\
-\
-plt.plot(unrate['DATE'][:12],unrate['VALUE'][:12])\
-plt.xticks(rotation=90)							aylar eksene dik hale geldi\
-plt.xlabel('Month')								eksen basliklari\
-plt.ylabel('Unemployment Rate')						eksen basliklari\
-plt.title('Monthly Unemployment Trends, 1948')		plota baslik koyar\
-plt.show()\
-\
-\'97fig = plt.figure()\
-ax1 = fig.add_subplot(2,1,1)				bir figure icinde alt alta iki plot yap\uc0\u305 yor\
-ax2 = fig.add_subplot(2,1,2)\
-plt.show()\
-\
-\'97 fig = plt.figure()\
-ax1 = fig.add_subplot(2,1,1)				\
-ax2 = fig.add_subplot(2,1,2)\
-\
-ax1.plot(unrate['DATE'][:12],unrate['VALUE'][:12])\
-ax2.plot(unrate['DATE'][12:24],unrate['VALUE'][12:24])\
-\
-plt.show()\
-\
-\'97 fig = plt.figure(figsize=(12,5))					2 plotu icine alan grafigin boyutlar\uc0\u305 n\u305  belirler\
-ax1 = fig.add_subplot(2,1,1)\
-ax2 = fig.add_subplot(2,1,2)\
-ax1.plot(unrate[0:12]['DATE'], unrate[0:12]['VALUE'])\
-ax1.set_title('Monthly Unemployment Rate, 1948')			plota baslik koyar\
-ax2.plot(unrate[12:24]['DATE'], unrate[12:24]['VALUE'])\
-ax2.set_title('Monthly Unemployment Rate, 1949')\
-plt.show()\
-\
-\
-\'97fig = plt.figure(figsize=(12,12))\
-\
-for i in range(5):\
-    ax = fig.add_subplot(5,1,i+1)						     alt alta 5 tane plot ciziyor\
-    start_index = i*12\
-    end_index = (i+1)*12\
-    subset = unrate[start_index:end_index]\
-    ax.plot(subset['DATE'], subset['VALUE'])\
-\
-plt.show()\
-\
-\
-\'97 unrate['MONTH'] = unrate['DATE'].dt.month		                         bir plot un icine iki line chart \'e7iziyor.\
-fig = plt.figure(figsize=(6,3))\
-plt.plot(unrate[0:12]['MONTH'], unrate[0:12]['VALUE'], c='red')\
-plt.plot(unrate[12:24]['MONTH'], unrate[12:24]['VALUE'], c='blue')\
-plt.show()\
-\
-\'97 unrate['MONTH'] = unrate['DATE'].dt.month		                        \
-fig = plt.figure(figsize=(10,6))\
-plt.plot(unrate[0:12]['MONTH'], unrate[0:12]['VALUE'], c='red')                   \
-plt.plot(unrate[12:24]['MONTH'], unrate[12:24]['VALUE'], c='blue')                bir plot un icine bes line chart \'e7iziyor.\
-plt.plot(unrate[24:36]['MONTH'], unrate[24:36]['VALUE'], c='green')\
-plt.plot(unrate[36:48]['MONTH'], unrate[36:48]['VALUE'], c='orange')\
-plt.plot(unrate[48:60]['MONTH'], unrate[48:60]['VALUE'], c='black')\
-plt.show()\
-\
-\
-\'97fig = plt.figure(figsize=(10,6))\
-colors = ['red', 'blue', 'green', 'orange', 'black']\
-for i in range(5):\
-    start_index = i*12\
-    end_index = (i+1)*12\
-    subset = unrate[start_index:end_index]			                                         yukaridaki grafigin for ile yapilmis hali\
-    label = str(1948 + i)\
-    plt.plot(subset['MONTH'], subset['VALUE'], c=colors[i], label=label)                   Lejand da gorulsun diye her plota label koyduk\
-plt.legend(loc='upper left')\
-\
-plt.show()\
-\
-\'97 fig = plt.figure(figsize=(10,6))\
-colors = ['red', 'blue', 'green', 'orange', 'black']\
-for i in range(5):\
-    start_index = i*12\
-    end_index = (i+1)*12\
-    subset = unrate[start_index:end_index]\
-    label = str(1948 + i)\
-    plt.plot(subset['MONTH'], subset['VALUE'], c=colors[i], label=label)\
-plt.legend(loc='upper left')\
-\
-plt.xlabel('Month, Integer')							                                              yukaridaki grafigin eksen ve grafik basliklari eklenmi\uc0\u351  hali\
-plt.ylabel('Unemployment Rate, Percent')						\
-plt.title('Monthly Unemployment Trends, 1948-1952')\
-\
-plt.show()}
+unrate = pd.read_csv('unrate.csv')
+unrate['DATE'] = pd.to_datetime(unrate['DATE'])
+
+plt.plot(unrate['DATE'][:12],unrate['VALUE'][:12])
+plt.xticks(rotation=90)							aylar eksene dik hale geldi
+plt.xlabel('Month')								eksen basliklari
+plt.ylabel('Unemployment Rate')						eksen basliklari
+plt.title('Monthly Unemployment Trends, 1948')		plota baslik koyar
+plt.show()
+
+—fig = plt.figure()
+ax1 = fig.add_subplot(2,1,1)				bir figure icinde alt alta iki plot yapıyor
+ax2 = fig.add_subplot(2,1,2)
+plt.show()
+
+— fig = plt.figure()
+ax1 = fig.add_subplot(2,1,1)				
+ax2 = fig.add_subplot(2,1,2)
+
+ax1.plot(unrate['DATE'][:12],unrate['VALUE'][:12])
+ax2.plot(unrate['DATE'][12:24],unrate['VALUE'][12:24])
+
+plt.show()
+
+— fig = plt.figure(figsize=(12,5))					2 plotu icine alan grafigin boyutlarını belirler
+ax1 = fig.add_subplot(2,1,1)
+ax2 = fig.add_subplot(2,1,2)
+ax1.plot(unrate[0:12]['DATE'], unrate[0:12]['VALUE'])
+ax1.set_title('Monthly Unemployment Rate, 1948')			plota baslik koyar
+ax2.plot(unrate[12:24]['DATE'], unrate[12:24]['VALUE'])
+ax2.set_title('Monthly Unemployment Rate, 1949')
+plt.show()
+
+
+—fig = plt.figure(figsize=(12,12))
+
+for i in range(5):
+    ax = fig.add_subplot(5,1,i+1)						     alt alta 5 tane plot ciziyor
+    start_index = i*12
+    end_index = (i+1)*12
+    subset = unrate[start_index:end_index]
+    ax.plot(subset['DATE'], subset['VALUE'])
+
+plt.show()
+
+
+— unrate['MONTH'] = unrate['DATE'].dt.month		                         bir plot un icine iki line chart çiziyor.
+fig = plt.figure(figsize=(6,3))
+plt.plot(unrate[0:12]['MONTH'], unrate[0:12]['VALUE'], c='red')
+plt.plot(unrate[12:24]['MONTH'], unrate[12:24]['VALUE'], c='blue')
+plt.show()
+
+— unrate['MONTH'] = unrate['DATE'].dt.month		                        
+fig = plt.figure(figsize=(10,6))
+plt.plot(unrate[0:12]['MONTH'], unrate[0:12]['VALUE'], c='red')                   
+plt.plot(unrate[12:24]['MONTH'], unrate[12:24]['VALUE'], c='blue')                bir plot un icine bes line chart çiziyor.
+plt.plot(unrate[24:36]['MONTH'], unrate[24:36]['VALUE'], c='green')
+plt.plot(unrate[36:48]['MONTH'], unrate[36:48]['VALUE'], c='orange')
+plt.plot(unrate[48:60]['MONTH'], unrate[48:60]['VALUE'], c='black')
+plt.show()
+
+
+—fig = plt.figure(figsize=(10,6))
+colors = ['red', 'blue', 'green', 'orange', 'black']
+for i in range(5):
+    start_index = i*12
+    end_index = (i+1)*12
+    subset = unrate[start_index:end_index]			                                         yukaridaki grafigin for ile yapilmis hali
+    label = str(1948 + i)
+    plt.plot(subset['MONTH'], subset['VALUE'], c=colors[i], label=label)                   Lejand da gorulsun diye her plota label koyduk
+plt.legend(loc='upper left')
+
+plt.show()
+
+— fig = plt.figure(figsize=(10,6))
+colors = ['red', 'blue', 'green', 'orange', 'black']
+for i in range(5):
+    start_index = i*12
+    end_index = (i+1)*12
+    subset = unrate[start_index:end_index]
+    label = str(1948 + i)
+    plt.plot(subset['MONTH'], subset['VALUE'], c=colors[i], label=label)
+plt.legend(loc='upper left')
+
+plt.xlabel('Month, Integer')							                                              yukaridaki grafigin eksen ve grafik basliklari eklenmiş hali
+plt.ylabel('Unemployment Rate, Percent')						
+plt.title('Monthly Unemployment Trends, 1948-1952')
+
+plt.show()
