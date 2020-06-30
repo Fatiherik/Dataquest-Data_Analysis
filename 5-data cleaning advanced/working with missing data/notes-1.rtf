@@ -1,270 +1,195 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2511
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\froman\fcharset0 Times-Roman;\f2\fnil\fcharset0 Menlo-Regular;
-\f3\froman\fcharset0 Times-Bold;}
-{\colortbl;\red255\green255\blue255;\red41\green46\blue57;\red255\green255\blue255;\red183\green13\blue60;
-\red247\green237\blue240;\red41\green46\blue57;\red183\green13\blue60;\red247\green237\blue240;\red35\green42\blue46;
-\red238\green241\blue246;\red67\green67\blue67;\red92\green117\blue38;\red58\green90\blue155;\red0\green0\blue0;
-\red60\green64\blue83;}
-{\*\expandedcolortbl;;\cssrgb\c21176\c23922\c28627;\cssrgb\c100000\c100000\c100000;\cssrgb\c77647\c14118\c30196;
-\cssrgb\c97647\c94510\c95294;\cssrgb\c21176\c23922\c28627;\cssrgb\c77647\c14118\c30196;\cssrgb\c97647\c94510\c95294;\cssrgb\c18039\c21961\c23529;
-\cssrgb\c94510\c95686\c97255;\cssrgb\c33333\c33333\c33333;\cssrgb\c43137\c52549\c19608;\cssrgb\c29020\c43529\c67059;\cssrgb\c0\c0\c0;
-\cssrgb\c30196\c32157\c40000;}
-{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid1\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
-{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
-\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh18000\viewkind0
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+— import pandas as pd
+mvc = pd.read_csv("nypd_mvc_2018.csv")
 
-\f0\fs28 \cf0 \'97 import pandas as pd\
-mvc = pd.read_csv("nypd_mvc_2018.csv")\
-\
-null_counts=mvc.isnull().sum()\
-\
-\'97killed_cols = [col for col in mvc.columns if 'killed' in col]\
-killed = mvc[killed_cols].copy()\
-\
-killed_manual_sum=killed.iloc[:,:3].sum(axis=1)\
-killed_mask=killed_manual_sum!=killed['total_killed']\
-killed_non_eq=killed[killed_mask]\
-\
-\'97import numpy as np\
-\
-# fix the killed values\
-killed['total_killed'] = killed['total_killed'].mask(killed['total_killed'].isnull(), killed_manual_sum)\
-killed['total_killed'] = killed['total_killed'].mask(killed['total_killed'] != killed_manual_sum, np.nan)\
-\
-# Create an injured dataframe and manually sum values\
-injured = mvc[[col for col in mvc.columns if 'injured' in col]].copy()\
-injured_manual_sum = injured.iloc[:,:3].sum(axis=1)\
-\
-\pard\tx220\tx720\pardeftab720\li720\fi-720\sl840\sa240\partightenfactor0
-\ls1\ilvl0
-\f1\fs42 \cf2 \cb3 {\listtext	1.	}\expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Use\'a0
-\f2\fs35\fsmilli17850 \cf4 \cb5 \strokec4 Series.mask()
-\f1\fs42 \cf2 \cb3 \strokec2 \'a0to replace any null values from the\'a0
-\f2\fs35\fsmilli17850 \cf4 \cb5 \strokec4 total_injured
-\f1\fs42 \cf2 \cb3 \strokec2 \'a0column with their equivalents from the\'a0
-\f2\fs35\fsmilli17850 \cf4 \cb5 \strokec4 injured_manual_sum
-\f1\fs42 \cf2 \cb3 \strokec2 \'a0series\cb1 \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+null_counts=mvc.isnull().sum()
 
-\f0\fs28 \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
-injured['total_injured'] = injured['total_injured'].mask(injured['total_injured'].isnull(), injured_manual_sum)\
-\
-\pard\tx220\tx720\pardeftab720\li720\fi-720\sl840\partightenfactor0
+—killed_cols = [col for col in mvc.columns if 'killed' in col]
+killed = mvc[killed_cols].copy()
 
-\f1\fs42 \cf6 \cb3 	2.	\expnd0\expndtw0\kerning0
-Use\'a0
-\f2\fs35\fsmilli17850 \cf7 \cb8 Series.mask()
-\f1\fs42 \cf6 \cb3 \'a0to replace any numbers from\'a0
-\f2\fs35\fsmilli17850 \cf7 \cb8 total_injured
-\f1\fs42 \cf6 \cb3 \'a0that aren't equal to their equivalents in\'a0
-\f2\fs35\fsmilli17850 \cf7 \cb8 injured_manual_sum
-\f1\fs42 \cf6 \cb3 \'a0with\'a0
-\f2\fs35\fsmilli17850 \cf7 \cb8 np.nan
-\f1\fs42 \cf6 \cb3 .\
+killed_manual_sum=killed.iloc[:,:3].sum(axis=1)
+killed_mask=killed_manual_sum!=killed['total_killed']
+killed_non_eq=killed[killed_mask]
 
-\f0\fs28 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf0 injured['total_injured'] = injured['total_injured'].mask(injured['total_injured'] != injured_manual_sum, np.nan)\
-\
-\'97 
-\f2 \cf9 \cb10 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec9 summary \cf11 \strokec11 =\cf9 \strokec9  \{\cb1 \
-\pard\pardeftab720\sl540\partightenfactor0
-\cf9 \cb10  \'a0 \'a0\cf12 \strokec12 'injured'\cf9 \strokec9 : [\cb1 \
-\cb10  \'a0 \'a0 \'a0 \'a0mvc[\cf12 \strokec12 'total_injured'\cf9 \strokec9 ].isnull().sum(),\cb1 \
-\cb10  \'a0 \'a0 \'a0 \'a0injured[\cf12 \strokec12 'total_injured'\cf9 \strokec9 ].isnull().sum()\cb1 \
-\cb10  \'a0  ],\cb1 \
-\cb10  \'a0 \'a0\cf12 \strokec12 'killed'\cf9 \strokec9 : [\cb1 \
-\cb10  \'a0 \'a0 \'a0 \'a0mvc[\cf12 \strokec12 'total_killed'\cf9 \strokec9 ].isnull().sum(),\cb1 \
-\cb10  \'a0 \'a0 \'a0 \'a0killed[\cf12 \strokec12 'total_killed'\cf9 \strokec9 ].isnull().sum()\cb1 \
-\cb10  \'a0  ]\cb1 \
-\cb10 \}\cb1 \
-\cf13 \cb10 \strokec13 print\cf9 \strokec9 (pd.DataFrame(summary, index\cf11 \strokec11 =\cf9 \strokec9 [\cf12 \strokec12 'before'\cf9 \strokec9 ,\cf12 \strokec12 'after'\cf9 \strokec9 ]))\cb1 \
-\
+—import numpy as np
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth708\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf15 \clbrdrl\brdrs\brdrw20\brdrcf15 \clbrdrb\brdrs\brdrw20\brdrcf15 \clbrdrr\brdrs\brdrw20\brdrcf15 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth825\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf15 \clbrdrl\brdrs\brdrw20\brdrcf15 \clbrdrb\brdrs\brdrw20\brdrcf15 \clbrdrr\brdrs\brdrw20\brdrcf15 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth633\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf15 \clbrdrl\brdrs\brdrw20\brdrcf15 \clbrdrb\brdrs\brdrw20\brdrcf15 \clbrdrr\brdrs\brdrw20\brdrcf15 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\qc\partightenfactor0
+# fix the killed values
+killed['total_killed'] = killed['total_killed'].mask(killed['total_killed'].isnull(), killed_manual_sum)
+killed['total_killed'] = killed['total_killed'].mask(killed['total_killed'] != killed_manual_sum, np.nan)
 
-\f3\b \cf14 \strokec14 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\qc\partightenfactor0
-\cf14 \cb3 injured\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\qc\partightenfactor0
-\cf14 \cb3 killed\cb1 \cell \row
+# Create an injured dataframe and manually sum values
+injured = mvc[[col for col in mvc.columns if 'injured' in col]].copy()
+injured_manual_sum = injured.iloc[:,:3].sum(axis=1)
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth708\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf15 \clbrdrl\brdrs\brdrw20\brdrcf15 \clbrdrb\brdrs\brdrw20\brdrcf15 \clbrdrr\brdrs\brdrw20\brdrcf15 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth825\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf15 \clbrdrl\brdrs\brdrw20\brdrcf15 \clbrdrb\brdrs\brdrw20\brdrcf15 \clbrdrr\brdrs\brdrw20\brdrcf15 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth633\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf15 \clbrdrl\brdrs\brdrw20\brdrcf15 \clbrdrb\brdrs\brdrw20\brdrcf15 \clbrdrr\brdrs\brdrw20\brdrcf15 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\qc\partightenfactor0
-\cf14 \cb3 before\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+	1.	Use Series.mask() to replace any null values from the total_injured column with their equivalents from the injured_manual_sum series
 
-\f1\b0 \cf14 \cb3 1\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf14 \cb3 5\cb1 \cell \row
+injured['total_injured'] = injured['total_injured'].mask(injured['total_injured'].isnull(), injured_manual_sum)
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth708\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf15 \clbrdrl\brdrs\brdrw20\brdrcf15 \clbrdrb\brdrs\brdrw20\brdrcf15 \clbrdrr\brdrs\brdrw20\brdrcf15 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx2880
-\clvertalc \clshdrawnil \clwWidth825\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf15 \clbrdrl\brdrs\brdrw20\brdrcf15 \clbrdrb\brdrs\brdrw20\brdrcf15 \clbrdrr\brdrs\brdrw20\brdrcf15 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx5760
-\clvertalc \clshdrawnil \clwWidth633\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf15 \clbrdrl\brdrs\brdrw20\brdrcf15 \clbrdrb\brdrs\brdrw20\brdrcf15 \clbrdrr\brdrs\brdrw20\brdrcf15 \clpadt160 \clpadl160 \clpadb160 \clpadr160 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl600\qc\partightenfactor0
+	2.	Use Series.mask() to replace any numbers from total_injured that aren't equal to their equivalents in injured_manual_sum with np.nan.
 
-\f3\b \cf14 \cb3 after\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
+injured['total_injured'] = injured['total_injured'].mask(injured['total_injured'] != injured_manual_sum, np.nan)
 
-\f1\b0 \cf14 \cb3 21\cb1 \cell 
-\pard\intbl\itap1\pardeftab720\sl600\partightenfactor0
-\cf14 \cb3 1
-\fs24 \cb1 \cell \lastrow\row
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-
-\f0\fs28 \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
-\'97mvc['total_injured']=injured['total_injured']\
-mvc['total_killed']=killed['total_killed']\
-\
-\'97cols_with_missing_vals = mvc.columns[mvc.isnull().sum() > 0]\
-missing_corr = mvc[cols_with_missing_vals].isnull().corr()\
-print(missing_corr)								                     en az 1 bos deger bulunan s\'fctunlar\uc0\u305 n korelasyon matrisi\
-\
-\'97 def plot_null_correlations(df):\
-    # create a correlation matrix only for columns with at least\
-    # one missing value\
-    cols_with_missing_vals = df.columns[df.isnull().sum() > 0]\
-    missing_corr = df[cols_with_missing_vals].isnull().corr()\
-    \
-    # create a mask to avoid repeated values and make\
-    # the plot easier to read\
-    missing_corr = missing_corr.iloc[1:, :-1]\
-    mask = np.triu(np.ones_like(missing_corr), k=1)\
-    \
-    # plot a heatmap of the values\
-    plt.figure(figsize=(20,14))\
-    ax = sns.heatmap(missing_corr, vmin=-1, vmax=1, cbar=False,\
-                     cmap='RdBu', mask=mask, annot=True)\
-    \
-    # format the text in the plot to make it easier to read\
-    for text in ax.texts:\
-        t = float(text.get_text())\
-        if -0.05 < t < 0.01:\
-            text.set_text('')\
-        else:\
-            text.set_text(round(t, 2))\
-        text.set_fontsize('x-large')\
-    plt.xticks(rotation=90, size='x-large')\
-    plt.yticks(rotation=0, size='x-large')\
-\
-    plt.show()\
-    \
-vehicle=mvc[[col for col in mvc.columns if 'vehicle' in col]]\
-plot_null_correlations(vehicle)\
-\
-\
-\'97 col_labels = ['v_number', 'vehicle_missing', 'cause_missing']\
-\
-vc_null_data = []\
-\
-for v in range(1,6):\
-    v_col = 'vehicle_\{\}'.format(v)\
-    c_col = 'cause_vehicle_\{\}'.format(v)\
-    \
-    v_null=(mvc[v_col].isnull()&mvc[c_col].notnull()).sum()\
-    c_null=(mvc[c_col].isnull()&mvc[v_col].notnull()).sum()\
-      \
-    vc_null_data.append([v, v_null, c_null])\
-    \
-vc_null_df=pd.DataFrame(vc_null_data, columns=col_labels)\
-\
-\'97 v_cols = [c for c in mvc.columns if c.startswith("vehicle")]\
-vehicle = mvc[v_cols]\
-vehicles_1d= vehicle.stack()						 stack() se\'e7ti\uc0\u287 imiz sutunlari tek sutun haline getiriyor. sonra value_count uygulayabiliyorsun. Mesela 5 sutunda en fazla tekrar eden deger ne?\
-top10_vehicles=vehicles_1d.value_counts()\
-\
-\'97 def summarize_missing():\
-    v_missing_data = []\
-\
-    for v in range(1,6):\
-        v_col = 'vehicle_\{\}'.format(v)\
-        c_col = 'cause_vehicle_\{\}'.format(v)\
-\
-        v_missing = (mvc[v_col].isnull() & mvc[c_col].notnull()).sum()\
-        c_missing = (mvc[c_col].isnull() & mvc[v_col].notnull()).sum()\
-\
-        v_missing_data.append([v, v_missing, c_missing])\
-\
-    col_labels = columns=["vehicle_number", "vehicle_missing", "cause_missing"]\
-    return pd.DataFrame(v_missing_data, columns=col_labels)\
-\
-summary_before = summarize_missing()\
-\
-for v in range(1,6):\
-    v_col = 'vehicle_\{\}'.format(v)\
-    c_col = 'cause_vehicle_\{\}'.format(v)\
-    \
-    v_missing_mask = mvc[v_col].isnull() & mvc[c_col].notnull()\
-    c_missing_mask = mvc[c_col].isnull() & mvc[v_col].notnull()\
-    \
-    mvc[v_col] =  mvc[v_col].mask(v_missing_mask, "Unspecified")\
-    mvc[c_col] =  mvc[c_col].mask(c_missing_mask, "Unspecified")\
-    \
-summary_after = summarize_missing()\
-\
-\'97  sup_data = pd.read_csv('supplemental_data.csv')\
-\
-location_cols = ['location', 'on_street', 'off_street', 'borough']\
-null_before = mvc[location_cols].isnull().sum()\
-\
-for i in location_cols:\
-    missing_mask = mvc[i].isnull()\
-    mvc[i]=mvc[i].mask(missing_mask,sup_data[i])		                      eger bir hucre mvc tablosunda bossa onu sup_datadaki degerle dolduruyor\
-    \
-null_after= mvc[location_cols].isnull().sum()\
-\
-\'97 \
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
-\
+— summary = {
+    'injured': [
+        mvc['total_injured'].isnull().sum(),
+        injured['total_injured'].isnull().sum()
+    ],
+    'killed': [
+        mvc['total_killed'].isnull().sum(),
+        killed['total_killed'].isnull().sum()
+    ]
 }
+print(pd.DataFrame(summary, index=['before','after']))
+
+
+injured
+killed
+before
+1
+5
+after
+21
+1
+
+—mvc['total_injured']=injured['total_injured']
+mvc['total_killed']=killed['total_killed']
+
+—cols_with_missing_vals = mvc.columns[mvc.isnull().sum() > 0]
+missing_corr = mvc[cols_with_missing_vals].isnull().corr()
+print(missing_corr)								                     en az 1 bos deger bulunan sütunların korelasyon matrisi
+
+— def plot_null_correlations(df):
+    # create a correlation matrix only for columns with at least
+    # one missing value
+    cols_with_missing_vals = df.columns[df.isnull().sum() > 0]
+    missing_corr = df[cols_with_missing_vals].isnull().corr()
+    
+    # create a mask to avoid repeated values and make
+    # the plot easier to read
+    missing_corr = missing_corr.iloc[1:, :-1]
+    mask = np.triu(np.ones_like(missing_corr), k=1)
+    
+    # plot a heatmap of the values
+    plt.figure(figsize=(20,14))
+    ax = sns.heatmap(missing_corr, vmin=-1, vmax=1, cbar=False,
+                     cmap='RdBu', mask=mask, annot=True)
+    
+    # format the text in the plot to make it easier to read
+    for text in ax.texts:
+        t = float(text.get_text())
+        if -0.05 < t < 0.01:
+            text.set_text('')
+        else:
+            text.set_text(round(t, 2))
+        text.set_fontsize('x-large')
+    plt.xticks(rotation=90, size='x-large')
+    plt.yticks(rotation=0, size='x-large')
+
+    plt.show()
+    
+vehicle=mvc[[col for col in mvc.columns if 'vehicle' in col]]
+plot_null_correlations(vehicle)
+
+
+— col_labels = ['v_number', 'vehicle_missing', 'cause_missing']
+
+vc_null_data = []
+
+for v in range(1,6):
+    v_col = 'vehicle_{}'.format(v)
+    c_col = 'cause_vehicle_{}'.format(v)
+    
+    v_null=(mvc[v_col].isnull()&mvc[c_col].notnull()).sum()
+    c_null=(mvc[c_col].isnull()&mvc[v_col].notnull()).sum()
+      
+    vc_null_data.append([v, v_null, c_null])
+    
+vc_null_df=pd.DataFrame(vc_null_data, columns=col_labels)
+
+— v_cols = [c for c in mvc.columns if c.startswith("vehicle")]
+vehicle = mvc[v_cols]
+vehicles_1d= vehicle.stack()						 stack() seçtiğimiz sutunlari tek sutun haline getiriyor. sonra value_count uygulayabiliyorsun. Mesela 5 sutunda en fazla tekrar eden deger ne?
+top10_vehicles=vehicles_1d.value_counts()
+
+— def summarize_missing():
+    v_missing_data = []
+
+    for v in range(1,6):
+        v_col = 'vehicle_{}'.format(v)
+        c_col = 'cause_vehicle_{}'.format(v)
+
+        v_missing = (mvc[v_col].isnull() & mvc[c_col].notnull()).sum()
+        c_missing = (mvc[c_col].isnull() & mvc[v_col].notnull()).sum()
+
+        v_missing_data.append([v, v_missing, c_missing])
+
+    col_labels = columns=["vehicle_number", "vehicle_missing", "cause_missing"]
+    return pd.DataFrame(v_missing_data, columns=col_labels)
+
+summary_before = summarize_missing()
+
+for v in range(1,6):
+    v_col = 'vehicle_{}'.format(v)
+    c_col = 'cause_vehicle_{}'.format(v)
+    
+    v_missing_mask = mvc[v_col].isnull() & mvc[c_col].notnull()
+    c_missing_mask = mvc[c_col].isnull() & mvc[v_col].notnull()
+    
+    mvc[v_col] =  mvc[v_col].mask(v_missing_mask, "Unspecified")
+    mvc[c_col] =  mvc[c_col].mask(c_missing_mask, "Unspecified")
+    
+summary_after = summarize_missing()
+
+—  sup_data = pd.read_csv('supplemental_data.csv')
+
+location_cols = ['location', 'on_street', 'off_street', 'borough']
+null_before = mvc[location_cols].isnull().sum()
+
+for i in location_cols:
+    missing_mask = mvc[i].isnull()
+    mvc[i]=mvc[i].mask(missing_mask,sup_data[i])		                      eger bir hucre mvc tablosunda bossa onu sup_datadaki degerle dolduruyor
+    
+null_after= mvc[location_cols].isnull().sum()
+
+— 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
