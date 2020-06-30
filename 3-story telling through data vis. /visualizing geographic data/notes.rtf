@@ -1,0 +1,69 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2511
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh18000\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf0 \'97 import pandas as pd\
+airlines=pd.read_csv('airlines.csv')\
+airports=pd.read_csv('airports.csv')\
+routes=pd.read_csv('routes.csv')\
+print(airlines.iloc[0])\
+print(airports.iloc[0])\
+print(routes.iloc[0])\
+\
+\'97 import matplotlib.pyplot as plt\
+from mpl_toolkits.basemap import Basemap\
+m=Basemap(projection='merc',llcrnrlat=-80,urcrnrlat=80,llcrnrlon=-180,urcrnrlon=180)\
+\
+\'97m = Basemap(projection='merc', llcrnrlat=-80, urcrnrlat=80, llcrnrlon=-180, urcrnrlon=180)\
+longitudes = airports["longitude"].tolist()\
+latitudes = airports["latitude"].tolist()\
+x, y = m(longitudes, latitudes)\
+\
+\'97 m = Basemap(projection='merc', llcrnrlat=-80, urcrnrlat=80, llcrnrlon=-180, urcrnrlon=180)\
+x, y = m(longitudes, latitudes)\
+m.scatter(x,y,s=1)\
+plt.show()\
+\
+\'97 m = Basemap(projection='merc', llcrnrlat=-80, urcrnrlat=80, llcrnrlon=-180, urcrnrlon=180)\
+longitudes = airports["longitude"].tolist()\
+latitudes = airports["latitude"].tolist()\
+x, y = m(longitudes, latitudes)\
+m.scatter(x, y, s=1)\
+m.drawcoastlines()                						sahil \'e7izgilerini \'e7izdik\
+plt.show()\
+\
+\'97 fig, ax = plt.subplots(figsize=(15,20))\
+plt.title("Scaled Up Earth With Coastlines")\
+\
+m = Basemap(projection='merc', llcrnrlat=-80, urcrnrlat=80, llcrnrlon=-180, urcrnrlon=180)\
+longitudes = airports["longitude"].tolist()\
+latitudes = airports["latitude"].tolist()\
+x, y = m(longitudes, latitudes)\
+m.scatter(x, y, s=1)\
+m.drawcoastlines()\
+plt.show()\
+\
+\'97 geo_routes=pd.read_csv('geo_routes.csv')\
+geo_routes.info()\
+geo_routes.head()\
+\
+\'97 fig, ax = plt.subplots(figsize=(15,20))\
+m = Basemap(projection='merc', llcrnrlat=-80, urcrnrlat=80, llcrnrlon=-180, urcrnrlon=180)\
+m.drawcoastlines()\
+\
+# Start writing your solution below this line\
+def create_great_circles(df):\
+    for index, row in df.iterrows():\
+        end_lat, start_lat = row['end_lat'], row['start_lat']\
+        end_lon, start_lon = row['end_lon'], row['start_lon']\
+        \
+        if abs(end_lat - start_lat) < 180:\
+            if abs(end_lon - start_lon) < 180:\
+                m.drawgreatcircle(start_lon, start_lat, end_lon, end_lat)\
+\
+dfw = geo_routes[geo_routes['source'] == "DFW"]\
+create_great_circles(dfw)\
+plt.show()}

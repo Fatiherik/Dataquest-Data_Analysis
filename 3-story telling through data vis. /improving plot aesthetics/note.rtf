@@ -1,0 +1,56 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2511
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh18000\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf0 \'97 plt.plot(women_degrees['Year'],women_degrees['Biology'])\
+plt.show()\
+\
+\'97 plt.plot(women_degrees['Year'], women_degrees['Biology'], c='blue', label='Women')\
+plt.plot(women_degrees['Year'], 100-women_degrees['Biology'], c='green', label='Men')\
+plt.legend(loc='upper right')\
+plt.title('Percentage of Biology Degrees Awarded by Gender')\
+\
+plt.show()\
+\
+\'97 fig, ax = plt.subplots()\
+ax.plot(women_degrees['Year'], women_degrees['Biology'], label='Women')\
+ax.plot(women_degrees['Year'], 100-women_degrees['Biology'], label='Men')\
+\
+ax.tick_params(bottom="off", top="off", left="off", right="off")\
+ax.set_title('Percentage of Biology Degrees Awarded By Gender')\
+ax.legend(loc="upper right")\
+\
+plt.show()\
+\
+\'97 fig, ax = plt.subplots()\
+ax.plot(women_degrees['Year'], women_degrees['Biology'], label='Women')\
+ax.plot(women_degrees['Year'], 100-women_degrees['Biology'], label='Men')\
+ax.tick_params(bottom="off", top="off", left="off", right="off")\
+ax.spines["right"].set_visible(False)					                                      grafigin cevrsindeki cevceveyi siliyor\
+ax.spines["left"].set_visible(False)\
+ax.spines["top"].set_visible(False)\
+ax.spines["bottom"].set_visible(False)\
+ax.legend(loc='upper right')\
+ax.set_title('Percentage of Biology Degrees Awarded By Gender')\
+plt.show()\
+\
+\'97 major_cats = ['Biology', 'Computer Science', 'Engineering', 'Math and Statistics']\
+fig = plt.figure(figsize=(12, 12))\
+\
+for sp in range(0,4):\
+    ax = fig.add_subplot(2,2,sp+1)\
+    ax.plot(women_degrees['Year'], women_degrees[major_cats[sp]], c='blue', label='Women')\
+    ax.plot(women_degrees['Year'], 100-women_degrees[major_cats[sp]], c='green', label='Men')\
+    for key,spine in ax.spines.items():\
+        spine.set_visible(False)\
+    ax.set_xlim(1968, 2011)\
+    ax.set_ylim(0,100)\
+    ax.set_title(major_cats[sp])\
+    ax.tick_params(bottom="off", top="off", left="off", right="off")\
+\
+# Calling pyplot.legend() here will add the legend to the last subplot that was created.\
+plt.legend(loc='upper right')\
+plt.show()}

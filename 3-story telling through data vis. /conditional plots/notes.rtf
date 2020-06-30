@@ -1,0 +1,43 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2511
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh18000\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf0 \'97import pandas as pd\
+titanic=pd.read_csv('train.csv')\
+titanic=titanic[['Survived','Pclass','Sex','Age','SibSp','Parch','Fare','Embarked']]\
+titanic=titanic.dropna()\
+\
+\'97import seaborn as sns    # seaborn is commonly imported as `sns`\
+import matplotlib.pyplot as plt\
+sns.distplot(titanic["Age\'94])			hem histogram hem de kernel density plot ciziyor\
+plt.show()\
+\
+\'97sns.kdeplot(titanic["Age"],shade=True)				sadece kernel density plot ciziyor, \'e7izginin alt\uc0\u305 nda kalan alan\u305  boyuyor\
+plt.xlabel('Age')\
+plt.show()\
+\
+\'97 sns.set_style("white")\
+sns.kdeplot(titanic["Age"],shade=True)\
+plt.xlabel('Age')							     sns.despine() default olarak right ve top siliyor, left ve bottom silmek icin ayr\uc0\u305 ca belirmek laz\u305 m\
+sns.despine(left=True, bottom=True)\
+plt.show()\
+\
+\'97g = sns.FacetGrid(titanic, col="Pclass", size=6)\
+g.map(sns.kdeplot, "Age", shade=True)\
+sns.despine(left=True, bottom=True)\
+\
+\'97 g = sns.FacetGrid(titanic, col="Survived", row="Pclass", hue='Sex', size=3)\
+g.map(sns.kdeplot, "Age", shade=True)\
+sns.despine(left=True, bottom=True)\
+plt.show()\
+\
+\'97 g = sns.FacetGrid(titanic, col="Survived", row="Pclass", hue='Sex', size=3)\
+g.map(sns.kdeplot, "Age", shade=True)\
+g.add_legend()\
+sns.despine(left=True, bottom=True)\
+plt.show()\
+\
+}
