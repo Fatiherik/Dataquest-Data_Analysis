@@ -1,0 +1,109 @@
+Yontem:
+	1.	Check for errors in data cleaning/transformation.
+	2.	Use data from additional sources to fill missing values.
+	3.	Drop row/column.
+	4.	Fill missing values with reasonable estimates computed from the available data.
+
+There are many options for choosing the replacement value, including:
+	•	A constant value
+	•	The mean of the column
+	•	The median of the column
+	•	The mode of the column
+
+We also started to set a more defined data cleaning workflow, in which we:
+	•	Set a goal for the project.
+	•	Researched and tried to understand the data.
+	•	Determined what data was needed to complete our analysis.
+	•	Added columns.
+	•	Cleaned specific data types.
+	•	Combined data sets.
+	•	Removed duplicate values.
+	•	Handled the missing values.
+Projede cevabini aradigin soru/sorular ne?
+Belgeyi okut ve ilk gozatma komutları ile dataya bak.
+Cevaba ulaşmak icin hangi verileri/sutunlari kullanmam gerekiyor? Baska bir tablodan ekstra veri alacak miyim?
+Datalari birleştir.
+Gereksiz sutunlari at.
+Sutun eklemen gerekiyorsa ekle.
+Cleaning asamasina gec (duplicate, missing data)
+
+
+
+— shape_2015=happiness2015.shape
+shape_2016=happiness2016.shape
+shape_2017=happiness2017.shape
+
+—missing = happiness2015['Happiness Score'].isnull()	          bos hucreleri Iceren dataframe verir
+happiness2015[missing]
+
+—missing_2016= happiness2016.isnull().sum()		herbir kolonda kac bos hucre var
+missing_2017= happiness2017.isnull().sum()
+
+—happiness2017.columns = happiness2017.columns.str.replace('.', ' ').str.replace('\s+', ' ').str.strip().str.upper()
+happiness2015.columns = happiness2015.columns.str.replace('(', '').str.replace(')', '').str.strip().str.upper()
+happiness2016.columns = happiness2016.columns.str.replace('(', '').str.replace(')', '').str.strip().str.upper()
+
+combined = pd.concat([happiness2015, happiness2016, happiness2017], ignore_index=True)
+missing = combined.isnull().sum()
+
+—import seaborn as sns
+combined_updated = combined.set_index('YEAR')
+sns.heatmap(combined_updated.isnull(), cbar=False)
+
+We can learn more about where these missing values are located by visualizing them with a heatmap, a graphical representation of our data in which values are represented as colors. We'll use the seaborn library to create the heatmap.
+Note below that we first reset the index to be the YEAR column so that we'll be able to see the corresponding year on the left side of the heatmap:
+
+—regions_2017=combined[combined['YEAR']==2017]['REGION']
+missing=regions_2017.isnull().sum().  			 yili 2017 olan dataframedeki region sütununda kac adet bos deger var.
+
+—combined=pd.merge(left=combined, right=regions, on='COUNTRY', how='left')
+combined=combined.drop('REGION_x', axis=1)
+missing=combined.isnull().sum()
+
+—combined=pd.merge(left=combined, right=regions, on='COUNTRY', how='left')
+combined=combined.drop('REGION_x', axis=1)
+missing=combined.isnull().sum()
+
+—dups = combined.duplicated(['COUNTRY', 'YEAR'])		ayni yıl ve ayni ülke var mi
+combined[dups]
+
+—combined['COUNTRY']=combined['COUNTRY'].str.upper()
+dups = combined.duplicated(['COUNTRY', 'YEAR'])
+print(combined[dups])
+
+—combined['COUNTRY'] = combined['COUNTRY'].str.upper()
+combined=combined.drop_duplicates(['COUNTRY', 'YEAR'])			hangi sutunlara gore sileceğiz, default olarak ilkini bırakıyor, ikinciyi siliyor, keep=‘last’ dersek tam tersini yapar.	
+
+— columns_to_drop = ['LOWER CONFIDENCE INTERVAL', 'STANDARD ERROR', 'UPPER CONFIDENCE INTERVAL', 'WHISKER HIGH', 'WHISKER LOW']
+combined=combined.drop(columns_to_drop,axis=1)
+missing=combined.isnull().sum()
+
+— df.dropna(axis=1)                  icinde nan deger olan sutunu siler. Default olarak icinde nan deger olan satiri siler.
+
+— combined.notnull().sum().sort_values()
+
+—combined=combined.dropna(thresh=159, axis=1)  		 icinde 159 adetten fazla nan deger iceren sutunu siler
+missing=combined.isnull().sum()
+
+—happiness_mean=combined['HAPPINESS SCORE'].mean()
+combined['HAPPINESS SCORE UPDATED']=combined['HAPPINESS SCORE'].fillna(happiness_mean)              nan degerleri mean ile doldurma yontemi. nan degerleri mean ile doldurduk ancak sunu farkettik, cogu nan degeri barındıran
+print(combined['HAPPINESS SCORE UPDATED'].mean())									subsaharan ülkelerinin mean degeri 4,15 ama biz tum ülkelerin mean degeri olan 5, 37 soru ile doldurduk. Bunun iyi bir yöntem 																			olmadigina karar verip, nan degerleri doldurmak yerine sildik.
+
+—combined=combined.dropna()
+missing=combined.isnull().sum()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
